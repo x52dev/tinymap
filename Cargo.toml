@@ -12,7 +12,7 @@ repository = "https://github.com/robjtede/tinymap"
 rust-version = "1.61"
 
 [dependencies]
-hashbrown = { version = "0.13", optional = true }
+hashbrown = { version = "0.17", optional = true }
 tinyvec = { version = "1.4", features = ["rustc_1_55"] }
 
 [features]
