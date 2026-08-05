@@ -216,6 +216,13 @@ impl<K: PartialOrd + Eq + Hash, V, const N: usize> TinyMap<K, V, N> {
     }
 }
 
+impl<K: PartialOrd + Eq + Hash, V, const N: usize> Default for TinyMap<K, V, N> {
+    #[inline]
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<K: PartialOrd + Eq + Hash, V, const N: usize> IntoIterator for TinyMap<K, V, N> {
     type Item = (K, V);
     type IntoIter = IntoIter<K, V, N>;

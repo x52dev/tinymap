@@ -176,18 +176,14 @@ impl<K: PartialOrd, V, const N: usize> ArrayMap<K, V, N> {
     fn node_by_key(&self, key: &K) -> Option<&Node<K, V>> {
         let mut current = self.root();
         loop {
-            match current {
+            let val = current?;
+            let node = self.node_at(val).expect("Invalid node tree");
+            current = match node.kv.0.partial_cmp(key) {
                 None => return None,
-                Some(val) => {
-                    let node = self.node_at(val).expect("Invalid node tree");
-                    current = match node.kv.0.partial_cmp(key) {
-                        None => return None,
-                        Some(Ordering::Equal) => return Some(node),
-                        Some(Ordering::Less) => node.children[0],
-                        Some(Ordering::Greater) => node.children[1],
-                    };
-                }
-            }
+                Some(Ordering::Equal) => return Some(node),
+                Some(Ordering::Less) => node.children[0],
+                Some(Ordering::Greater) => node.children[1],
+            };
         }
     }
 
@@ -196,20 +192,16 @@ impl<K: PartialOrd, V, const N: usize> ArrayMap<K, V, N> {
     fn node_by_key_mut(&mut self, key: &K) -> Option<&mut Node<K, V>> {
         let mut current = self.root();
         loop {
-            match current {
+            let val = current?;
+            let node = self.node_at(val).expect("Invalid node tree");
+            current = match node.kv.0.partial_cmp(key) {
                 None => return None,
-                Some(val) => {
-                    let node = self.node_at(val).expect("Invalid node tree");
-                    current = match node.kv.0.partial_cmp(key) {
-                        None => return None,
-                        Some(Ordering::Equal) => {
-                            return Some(self.node_at_mut(val).expect("Invalid node tree"));
-                        }
-                        Some(Ordering::Less) => node.children[0],
-                        Some(Ordering::Greater) => node.children[1],
-                    };
+                Some(Ordering::Equal) => {
+                    return Some(self.node_at_mut(val).expect("Invalid node tree"));
                 }
-            }
+                Some(Ordering::Less) => node.children[0],
+                Some(Ordering::Greater) => node.children[1],
+            };
         }
     }
 
@@ -433,10 +425,7 @@ impl<K: PartialOrd, V, const N: usize> ArrayMap<K, V, N> {
         let mut last_relationship = ParentChildRelation::ChildIsRoot;
         let mut current: Option<usize> = self.root;
         loop {
-            let c = match current {
-                Some(c) => c,
-                None => return None,
-            };
+            let c = current?;
             let cmp_node = self.node_at(c).expect(ERR_MSG);
             match cmp_node.kv.0.partial_cmp(key) {
                 None => return None,

@@ -83,7 +83,6 @@ impl<K, V, const N: usize> Iterator for IntoIter<K, V, N> {
     }
 
     #[inline]
-    #[must_use]
     fn size_hint(&self) -> (usize, Option<usize>) {
         (0, self.inner.size_hint().1)
     }
