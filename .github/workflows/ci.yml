@@ -27,7 +27,7 @@ jobs:
           persist-credentials: false
 
       - name: install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.3.5
+        uses: actions-rust-lang/setup-rust-toolchain@v1.17.0
         with:
           toolchain: ${{ matrix.version }}
 
@@ -50,7 +50,7 @@ jobs:
           persist-credentials: false
 
       - name: install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.3.5
+        uses: actions-rust-lang/setup-rust-toolchain@v1.17.0
         with: { components: rustfmt, clippy }
 
       - name: format
@@ -71,7 +71,7 @@ jobs:
           persist-credentials: false
 
       - name: install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.3.5
+        uses: actions-rust-lang/setup-rust-toolchain@v1.17.0
         with: { toolchain: nightly }
 
       - name: install cargo-hack
