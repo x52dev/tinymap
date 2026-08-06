@@ -8,6 +8,9 @@ on:
   schedule:
     - cron: 0 0 * * 0
 
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     strategy:
@@ -22,20 +25,20 @@ jobs:
 
     steps:
       - name: checkout source
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.17.0
+        uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
         with:
           toolchain: ${{ matrix.version }}
 
       - name: install cargo-hack
-        uses: taiki-e/install-action@cargo-hack
+        uses: taiki-e/install-action@78dfab2e8f19f714bfd9c6be6f5d54a483216ac7 # cargo-hack
 
       - name: install cargo-nextest
-        uses: taiki-e/install-action@cargo-nextest
+        uses: taiki-e/install-action@6debddaeb1b7d3f5b54cd54e11f60cf276d44c59 # cargo-nextest
 
       - name: test
         run: cargo hack --feature-powerset nextest run --workspace
@@ -43,42 +46,60 @@ jobs:
   linting:
     if: ${{ github.ref != 'main' }}
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
     steps:
       - name: checkout source
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.17.0
+        uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
         with: { components: rustfmt, clippy }
 
       - name: format
         run: cargo fmt --all -- --check
 
       - name: clippy
-        uses: actions-rs/clippy-check@v1
+        uses: giraffate/clippy-action@13b9d32482f25d29ead141b79e7e04e7900281e0 # v1.0.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: -- -D warnings
+          clippy_flags: -- -D warnings
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check
 
   minimal-versions:
     runs-on: ubuntu-latest
     steps:
       - name: checkout source
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: install Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.17.0
+        uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1.17.0
         with: { toolchain: nightly }
 
       - name: install cargo-hack
-        uses: taiki-e/install-action@cargo-hack
+        uses: taiki-e/install-action@78dfab2e8f19f714bfd9c6be6f5d54a483216ac7 # cargo-hack
 
       - name: install cargo-minimal-versions
-        uses: taiki-e/install-action@cargo-minimal-versions
+        uses: taiki-e/install-action@dec4d83a937c55bf6cb1f8dceffada74d43a3864 # cargo-minimal-versions
 
       - name: minimal version check
         run: cargo minimal-versions check --workspace
+
+  zizmor:
+    name: GitHub Actions Security
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
+        with:
+          advanced-security: false
+          annotations: true
