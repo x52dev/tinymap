@@ -35,10 +35,10 @@ jobs:
           toolchain: ${{ matrix.version }}
 
       - name: install cargo-hack
-        uses: taiki-e/install-action@78dfab2e8f19f714bfd9c6be6f5d54a483216ac7 # cargo-hack
+        uses: taiki-e/install-action@750514b48f677a9e52f0eab29937a9027b38a7a7 # cargo-hack
 
       - name: install cargo-nextest
-        uses: taiki-e/install-action@6debddaeb1b7d3f5b54cd54e11f60cf276d44c59 # cargo-nextest
+        uses: taiki-e/install-action@9fab7e4aa11d2cfc0d3dc3afbae89eb57b046c8b # cargo-nextest
 
       - name: test
         run: cargo hack --feature-powerset nextest run --workspace
@@ -82,10 +82,10 @@ jobs:
         with: { toolchain: nightly }
 
       - name: install cargo-hack
-        uses: taiki-e/install-action@78dfab2e8f19f714bfd9c6be6f5d54a483216ac7 # cargo-hack
+        uses: taiki-e/install-action@750514b48f677a9e52f0eab29937a9027b38a7a7 # cargo-hack
 
       - name: install cargo-minimal-versions
-        uses: taiki-e/install-action@dec4d83a937c55bf6cb1f8dceffada74d43a3864 # cargo-minimal-versions
+        uses: taiki-e/install-action@62a425ee5f4a21cdfb4e8029f93054691c1dc86a # cargo-minimal-versions
 
       - name: minimal version check
         run: cargo minimal-versions check --workspace
