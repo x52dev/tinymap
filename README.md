@@ -3,6 +3,7 @@
 [![Build Status](https://dev.azure.com/jtnunley01/gui-tools/_apis/build/status/not-a-seagull.tinymap?branchName=master)](https://dev.azure.com/jtnunley01/gui-tools/_build/latest?definitionId=9&branchName=master)
 [![crates.io](https://img.shields.io/crates/v/tinymap)](https://crates.io/crates/tinymap)
 [![docs.rs](https://docs.rs/tinymap/badge.svg)](https://docs.rs/tinymap)
+[![Discord: Join chat](https://img.shields.io/badge/Discord-Join%20chat-5865F2?logo=discord&logoColor=white)](https://discord.gg/G5k9mtUFSH)
 
 An implementation of a binary tree-based map that uses the `ArrayVec` from the `tinyvec` crate as its backing. This should not be used outside of projects that require `#![no_std]`. Even if your project is using `#![no_std]`, consider having a feature gate that allows the usage of `HashMap` or a similar type if the `alloc` crate is available. The main purpose of this crate is to provide a similar API to `HashMap` as a last resort in the event that `HashMap` is not available.
 
