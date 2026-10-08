@@ -7,6 +7,8 @@ authors = [
 ]
 edition = "2018"
 description = "A map structure that stores its data on the stack"
+categories = ["data-structures", "no-std"]
+keywords = ["map", "stack", "no-std", "fixed-capacity", "binary-tree"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/robjtede/tinymap"
 rust-version = "1.61"
