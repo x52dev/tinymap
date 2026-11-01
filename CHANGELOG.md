@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.4.1
+
+- No significant changes since `0.4.0 - 2023-02-09`.
+
 ## 0.4.0 - 2023-02-09
 
 - Make it work on stable.
